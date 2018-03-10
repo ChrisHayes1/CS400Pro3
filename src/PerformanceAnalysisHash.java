@@ -1,30 +1,71 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class PerformanceAnalysisHash implements PerformanceAnalysis {
 
-    // The input data from each file is stored in this/ per file
-    private ArrayList<String> inputData;
+	/************************
+     *Constants
+     ***********************/
+	private HashTable table; //hash table to be compared to TreeMap
+	private TreeMap treemap; //TreeMap
+    private ArrayList<String> inputData;//stores input from file
+    private File details; //details file, which lists other files
+    private BufferedReader br; //buffered reader for details file
+    private String output; //report to be printed
     
+    /************************
+     *Constructors
+     ***********************/
     public PerformanceAnalysisHash(){
+    	output = "------------------------------------------------------------------------------------------------\r\n" +
+    			"									Performance Analysis Report\r\n" + 
+    			"------------------------------------------------------------------------------------------------\r\n" +
+    			"|            FileName|      Operation| Data Structure|   Time Taken (micro sec)|     Bytes Used|\r\n" +
+    			"------------------------------------------------------------------------------------------------";
     }
-
-    public PerformanceAnalysisHash(String details_filename){
-        //TODO: Save the details of the test data files
+    public PerformanceAnalysisHash(String details_filename) {
+    	this();
+    	details = new File(details_filename);
+    	try {
+        br = new BufferedReader(new FileReader(details));
+        br.readLine(); // discard first line of file
+        br.close();
+    	}catch (IOException e) {}
     }
     @Override
     public void compareDataStructures() {
-        //TODO: Complete this function which compares the ds and generates the details
+    	try{
+    		String currFile = br.readLine().split(",")[0];
+	        while(currFile != null) {
+	        	loadData(currFile);
+	        	compareInsertion();
+	        	compareSearch();
+	        	compareDeletion();
+	        	currFile = br.readLine().split(",")[0];
+	        }
+    	}catch(IOException e) {}
     }
 
     @Override
     public void printReport() {
-        //TODO: Complete this method
+        File results = new File("results.txt");
+        
+        try {
+        BufferedWriter bw = new BufferedWriter(new FileWriter(results));
+        bw.write(output);
+        }catch(IOException e) {}
     }
 
     @Override
     public void compareInsertion() {
-        //TODO: Complete this method
+    	long startTime, time, mem; //time and memory value storage variables
+    	startTime = System.currentTimeMillis();
+        for(Object x : inputData) {
+        	table.put(x, x);
+        }
+        time = System.currentTimeMillis() - startTime;
+        //TODO: finish this method
     }
 
     @Override
