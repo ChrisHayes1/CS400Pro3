@@ -65,6 +65,7 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
         	table.put(x, x);
         }
         time = System.currentTimeMillis() - startTime;
+        //add comment
         //TODO: finish this method
     }
 
