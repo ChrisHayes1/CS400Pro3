@@ -2,6 +2,15 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+///////////////////////////////////////////////////////////////////////////////////////////////////
+//CS 400 Programming Assignment 3: Performance Analysis
+//@author: Mostafa Hassan (mwhassan@wisc.edu) and Christopher Hayes (hayesbirchle@ctri.wisc.edu)
+//@due date: 3/19/18
+///////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * Produces a report comparing the time and memory performance of the HashTable and TreeMap classes.
+ */
 public class PerformanceAnalysisHash implements PerformanceAnalysis {
 
 	/************************
@@ -15,7 +24,7 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
 	
     private ArrayList<String> inputData;//stores input from file
     
-    private String directory = "data/"; //directory in which detail file is
+    private String directory; //directory in which detail file is
     private String currFile; //current working file
     private String output; //report to be printed
     
@@ -23,6 +32,11 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
      *Constructors
      ***********************/
     
+    /**
+     * Initializes fields and loads details file.
+     * @param details_filename
+     * @throws IOException
+     */
     public PerformanceAnalysisHash(String details_filename) throws IOException {
     	//initialize structures
     	table = new HashTable<Object, Object>();
@@ -35,14 +49,20 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
     			"|\t\tFileName|\t\tOperation|\t\tData Structure|\t\tTime Taken (micro sec)|\t\tBytes Used|\r\n" +
     			"------------------------------------------------------------------------------------------------";
     	
-    	//open details file
+    	//open details file and sets directory
     	details = new File(details_filename);
+    	directory = details.getParent() + "/";
+    	System.out.println(directory);
     }
     
     /************************
      *Public Interface
      ***********************/
     
+    /**
+     * Loads data from files specified in the details file into each data structure.
+     * Compares insertion, searching, and deletion for each case.
+     */
     @Override
     public void compareDataStructures() {
     	try{
@@ -70,6 +90,9 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
     	}catch(IOException e) {}
     }
 
+    /**
+     * Prints the comparison report.
+     */
     @Override
     public void printReport() {
         File results = new File(directory + "results.txt");
@@ -81,6 +104,9 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
         }catch(IOException e) {}
     }
 
+    /**
+     * Compares time and memory of inserting into the data structures.
+     */
     @Override
     public void compareInsertion() {
     	long startTime, time, mem; //time and memory value storage variables
@@ -112,6 +138,9 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
         
     }
 
+    /**
+     * Compares the time it takes to insert into the data structures.
+     */
 	@Override
     public void compareDeletion() {
 		long startTime, time; //time value storage variables
@@ -147,6 +176,9 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
         treemap = new TreeMap<Object, Object>(); //reset TreeMap
     }
 
+	/**
+	 * Compares the time it takes to search in each of the data structures.
+	 */
     @Override
     public void compareSearch() {
     	long startTime, time; //time value storage variables
@@ -182,10 +214,8 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
         treemap = new TreeMap<Object, Object>(); //reset TreeMap
     }
 
-    /*
-    An implementation of loading files into local data structure is provided to you
-    Please feel free to make any changes if required as per your implementation.
-    However, this function can be used as is.
+    /**
+     * Loads a file to be used for testing.
      */
     @Override
     public void loadData(String filename) throws IOException {
@@ -206,6 +236,14 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
      *Private Helpers
      ***********************/
     
+    /**
+     * Adds a line to the report.
+     * @param file
+     * @param operation
+     * @param structure
+     * @param time
+     * @param mem
+     */
     private void print(String file, String operation, String structure, long time, long mem) {
 		output += "\n|\t\t" + file + "|\t\t" + operation + "|\t\t" + structure + "|\t\t" + time + "|\t\t" + mem + "|";
 	}
