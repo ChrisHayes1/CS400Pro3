@@ -2,12 +2,6 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-///////////////////////////////////////////////////////////////////////////////////////////////////
-//CS 400 Programming Assignment 3: Performance Analysis
-//@author: Mostafa Hassan (mwhassan@wisc.edu) and Christopher Hayes (hayesbirchle@ctri.wisc.edu)
-//@due date: 3/19/18
-///////////////////////////////////////////////////////////////////////////////////////////////////
-
 /**
  * Produces a report comparing the time and memory performance of the HashTable and TreeMap classes.
  */
@@ -43,16 +37,15 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
     	treemap = new TreeMap<Object, Object>();
     	
     	//header
-    	output = "------------------------------------------------------------------------------------------------\r\n" +
+    	output = "------------------------------------------------------------------------------------------------\r\n" + 
     			"									Performance Analysis Report\r\n" + 
-    			"------------------------------------------------------------------------------------------------\r\n" +
-    			"|\t\tFileName|\t\tOperation|\t\tData Structure|\t\tTime Taken (micro sec)|\t\tBytes Used|\r\n" +
+    			"------------------------------------------------------------------------------------------------\r\n" + 
+    			"|            FileName|      Operation| Data Structure|   Time Taken (micro sec)|     Bytes Used|\r\n" + 
     			"------------------------------------------------------------------------------------------------";
     	
     	//open details file and sets directory
     	details = new File(details_filename);
     	directory = details.getParent() + "/";
-    	System.out.println(directory);
     }
     
     /************************
@@ -245,6 +238,6 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
      * @param mem
      */
     private void print(String file, String operation, String structure, long time, long mem) {
-		output += "\n|\t\t" + file + "|\t\t" + operation + "|\t\t" + structure + "|\t\t" + time + "|\t\t" + mem + "|";
+    	output += String.format("\n|%20s|%15s|%15s|%25s|%15s|", file, operation, structure, time, mem);
 	}
 }
