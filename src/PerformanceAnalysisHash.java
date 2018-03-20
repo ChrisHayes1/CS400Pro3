@@ -204,23 +204,16 @@ public class PerformanceAnalysisHash implements PerformanceAnalysis {
     @Override
     public void compareSearch() {
         long startTime, time; //time value storage variables
-        Object tmpObj = "";
 
         //put into HashTable
-        
-       // int count = 0;
-        
-        
         for(Object x : inputData) {
             table.put(x, x);
-            //count++;
         }
         
         
         startTime = System.nanoTime();
         //search for all elements in HashTable
         
-        //count = 0;
         try{
             for(Object x : inputData) {
                 table.get(x);
